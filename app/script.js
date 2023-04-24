@@ -1,9 +1,10 @@
 import React from 'react';
 import { render } from 'react-dom';
 import { useState, useEffect, useMemo } from 'react';
-import ReactDOM from 'react-dom';
 
 const App = () => {
+  const timeToWorkInMs = 1200000; // 20 minutes in miliseconds
+  const timeToRestInMs = 200000; // 20 seconds in miliseconds
   const [status, setStatus] = useState('off');
   const [time, setTime] = useState(0);
   const [timer, setTimer] = useState(null);
@@ -39,17 +40,17 @@ const App = () => {
   useEffect(() => {
     if (time <= 0 && status === 'work') {
       playBell();
-      setTime(20000);
+      setTime(timeToRestInMs);
       setStatus('rest');
     } else if (time <= 0 && status === 'rest') {
       playBell();
-      setTime(1200000);
+      setTime(timeToWorkInMs);
       setStatus('work');
     }
   }, [time]);
 
   const start = () => {
-    setTime(1200000);
+    setTime(timeToWorkInMs);
     setStatus('work');
     setTimer(
       setInterval(() => {
